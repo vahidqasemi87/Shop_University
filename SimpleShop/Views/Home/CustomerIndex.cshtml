@@ -1,0 +1,230 @@
+﻿@inject BinaryHelper _binaryHelper;
+@inject SimpleShopDatabaseContext _db;
+
+@{
+	ViewData["Title"] = "خانه";
+	Layout = "~/Views/Shared/_PublicLayout.cshtml";
+	var categories = ViewData["Categories"] as List<Category>;
+	var products = ViewData["Products"] as List<Product>;
+	Customer customer = null;
+	int orderDetailCount = 0;
+	if (Context.Session.Keys.Contains("Customer"))
+	{
+		customer = _db.Customer.Find((_binaryHelper.FromBinary<Customer>(Context.Session.Get("Customer"))).CustomerId);
+		_db.Entry(customer).Collection(c => c.Order).Load();
+		var order = customer.Order.Where(o => o.IsPayed == false);
+		if (order!=null)
+		{
+			orderDetailCount = order.Count();
+		}
+	}
+}
+<header id="header" class="header-v1">
+    <div class="topbar">
+        <div class="container container-240">
+            <div class="row flex">
+                <div class="col-md-6 col-sm-6 col-xs-8 flex-left">
+                    <div class="topbar-left">
+                        <div class="element hidden-xs hidden-sm">
+                            <a class="persian-font" href="/home/userlogin">ورود مدیریت</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-4 flex-right">
+                    <div class="topbar-right">
+                        <div class="element element-store hidden-xs hidden-sm">
+                            <a id="label1" class="dropdown-toggle" href="https://goo.gl/maps/CFShBzq9nq9fzXWp7" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="/public/img/icon-map.png" alt="">
+                                <span>آدرس فروشگاه</span>
+
+                            </a>
+                        </div>
+                        @if (customer != null)
+                        {
+                            <div class="element hidden-xs hidden-sm">
+								<a href="/home/profile"><img src="/public/img/icon-track.png" alt=""><span class="persian-font">@(customer.Name+" "+customer.Family)</span></a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-center">
+        <div class="container container-240">
+            <div class="row flex">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6 v-center header-sub">
+                    <div class="left-panel">
+                        <div class="header-sub-element hidden-xs hidden-sm">
+                            <div class="sub-left">
+                                <img src="/public/img/icon-call.png" alt="">
+                            </div>
+                            <div class="sub-right text-right">
+                                <span class="persian-font">تماس با ما</span>
+                                <div class="phone persian-font">(+9821) 456 789 </div>
+                            </div>
+                        </div>
+                        <div class="header-sub-element row">
+                            <a class="hidden-xs hidden-sm cursor-hand" data-toggle="modal" data-target="#loginDialog"><img src="/public/img/icon-user.png" alt=""></a>
+                            <div class="cart">
+                                <a href="/home/order" class="dropdown-toggle" id="label5">
+                                    <img src="/public/img/icon-cart.png" alt="">
+                                    <span class="count cart-count">@orderDetailCount</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 v-center header-search hidden-xs hidden-sm">
+					<form method="post" class="searchform ajax-search" action="/home/search" role="search">
+						<input type="hidden" name="type" value="product">
+						<input autocomplete="off" type="text" onblur="if (this.value=='') this.value = this.defaultValue" onfocus="if (this.value==this.defaultValue) this.value = ''" name="name" class="form-control persian-font" placeholder="جستجو">
+						<ul class="list-product-search hidden-xs hidden-sm">
+						</ul>
+						<div class="search-panel">
+
+						</div>
+						<span class="input-group-btn">
+							<button class="button_search" type="submit"><i class="ion-ios-search-strong"></i></button>
+						</span>
+					</form>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 v-center header-logo">
+                    <a href="/home/customerindex"><img src="/public/img/logo.png" alt="" class="img-reponsive"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom hidden-xs hidden-sm">
+        <div class="container container-240">
+            <div class="row flex lr2">
+                <div class="col-lg-9 widget-left"></div>
+                <div class="col-lg-3 widget-verticalmenu">
+                    <div class="navbar-vertical">
+                        <button class="navbar-toggles t-r"><span class="persian-font">گروهبندی کالا</span></button>
+                    </div>
+                    <div class="vertical-wrapper">
+                        <ul class="vertical-group">
+                            @foreach (var category in categories)
+                            {
+                                <li class="vertical-item level1 vertical-drop">
+                                    <a href="#" class="persian-font text-right">@category.Name</a>
+                                    <div class="menu-level-1 dropdown-menu vertical-menu">
+                                        <ul class="vertical-menu1">
+                                            @foreach (var subcategory in category.Subcategory.OrderBy(s => s.Name))
+                                            {
+                                                <li class="text-right"><a class="persian-font" href="#">@subcategory.Name</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="ads-group v3">
+    <div class="container container-240">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 set-w2">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="slide">
+                            <div class="e-slide v2 js-slider-3items">
+                                @foreach (var product in products.Where(p=>p.ProductPhoto.Count>0).Take(3))
+                                {
+                                    <div class="e-slide-img v2">
+                                        <a href="#"><img src="/files/productphotos/@product.ProductPhoto.First().PhotoFilename" alt=""></a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="ads">
+                            <div class="banner-img banner-img2">
+                                <a href="/home/products"><img src="/public/img/banner/h1_b1.jpg" alt="" class="img-responsive"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 set-w"></div>
+        </div>
+    </div>
+</div>
+<div class="flash-deals">
+    <div class="container container-240">
+        <div class="title-icon t-column">
+            <div class="t-inside">
+                <img src="/public/img/flash-deals.png" alt="">
+            </div>
+            <h1 class="persian-font">جدید ترین کالا ها</h1>
+        </div>
+        <div class="owl-carousel owl-theme owl-cate js-owl-cate2">
+            @foreach (var product in products.Take(9))
+            {
+                <div class="product-countd pd-bd product-inner">
+                    <div class="product-item-countd">
+                        <div class="product-head product-img">
+                            <a target="_blank" href="/home/product/@product.ProductId"><img src="/files/productphotos/@product.PhotoFilename" alt="@product.Name"></a>
+                            <div class="ribbon-price v3 red persian-font"><span>جدید</span></div>
+                        </div>
+                        <div class="product-info">
+                            <p class="product-cate text-center persian-font">@product.Subcategory.Name</p>
+                            <div class="product-price thin-price v3">
+                                <span class="red persian-font">@product.UnitPrice تومان</span>
+                            </div>
+                            <h3 class="product-title text-center v2 persian-font"><a href="#">@product.Name</a></h3>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="container container-240">
+    <div class="banner-callus spc1 image-bd effect_img2 m-t-78-px">
+        <a href="/home/products"><img src="/public/img/banner/h1_b7.jpg" alt="" class="img-responsive"></a>
+        <div class="box-center v2">
+            <a href="/home/products" class="btn-callus persian-font">مشاهده کالا ها</a>
+        </div>
+    </div>
+</div>
+<div class="feature">
+    <div class="container container-240">
+        <div class="feature-inside">
+            <div class="feature-block text-center">
+                <div class="feature-block-img"><img src="/public/img/feature/truck.png" alt="" class="img-reponsive"></div>
+                <div class="feature-info">
+                    <h3 class="persian-font rtl">ارسال سریع و رایگان</h3>
+                    <p class="persian-font rtl">کالا های مورد نیاز خود را سریع و رایگان دریافت کنید</p>
+                </div>
+            </div>
+            <div class="feature-block text-center">
+                <div class="feature-block-img"><img src="/public/img/feature/credit-card.png" alt="" class="img-reponsive"></div>
+                <div class="feature-info">
+                    <h3 class="persian-font rtl">پرداخت در محل</h3>
+                    <p class="persian-font rtl">در محل کالای مورد نظر را تحویل بگیرید سپس پرداخت کنید</p>
+                </div>
+            </div>
+            <div class="feature-block text-center">
+                <div class="feature-block-img"><img src="/public/img/feature/safety.png" alt="" class="img-reponsive"></div>
+                <div class="feature-info">
+                    <h3 class="persian-font rtl">با اطمینان خرید کنید</h3>
+                    <p class="persian-font rtl">ضمانت بازگشت وجه در صورت عدم رضایت مشتری</p>
+                </div>
+            </div>
+            <div class="feature-block text-center">
+                <div class="feature-block-img"><img src="/public/img/feature/telephone.png" alt="" class="img-reponsive"></div>
+                <div class="feature-info">
+                    <h3 class="persian-font rtl">7 روز هفته 24 ساعته</h3>
+                    <p class="persian-font rtl">در خدمت مشتریان محترم هستیم</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

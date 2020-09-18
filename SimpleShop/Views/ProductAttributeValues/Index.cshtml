@@ -1,0 +1,92 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "ویژگی های کالا";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" href="/products">بازگشت</a>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="Index" enctype="multipart/form-data">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <div class="form-group">
+                <label class="control-label">ویژگی</label>
+                <select class="form-control" name="productAttributeId">
+                    @foreach (var productAttribute in ViewData["ProductAttributes"] as List<ProductAttribute>)
+                    {
+                        <option value="@productAttribute.ProductAttributeId">@productAttribute.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">مقدار</label>
+                <input type="text" name="value" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @Html.Grid(Model.ProductAttributeValue).Columns(columns =>
+   {
+       columns.Add(m=>m.ProductAttribute.Name).Titled("ویژگی").Filterable(true).Sortable(true);
+       columns.Add(m => m.Value).Titled("مقدار").Filterable(true).Sortable(true);
+       columns.Add(m => m.ProductAttribute.Unit.Name).Titled("واحد اندازه گیری").Filterable(true).Sortable(true);
+       columns.Add()
+       .Sanitized(false)
+       .Encoded(false)
+       .RenderValueAs(m => "<button data-toggle='modal' data-target='#editDialog' class='btn btn-xs btn-warning' onclick='editProductAttributeValue("+m.ProductAttributeValueId+","+m.ProductAttributeId+",\""+m.Value+"\")'>ویرایش</button> <button class='btn btn-xs btn-danger' data-toggle='modal' data-target='#deleteDialog' onclick='setId(" + m.ProductAttributeValueId + ")'>حذف</button>");
+   }).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="editDialog">
+    <form action="/productattributevalues/edit" method="post">
+        <input type="hidden" name="productAttributeValueId" id="editProductAttributeValueId" />
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title">ویرایش</strong>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">ویژگی</label>
+                        <select class="form-control" name="productAttributeId" id="editProductAttributeId">
+                            @foreach (var productAttribute in ViewData["ProductAttributes"] as List<ProductAttribute>)
+                            {
+                                <option value="@productAttribute.ProductAttributeId">@productAttribute.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">مقدار</label>
+                        <input type="text" name="value" class="form-control" id="editValue" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-xs btn-success pull-left">ذخیره</button>
+                    <button class="btn btn-xs btn-primary" data-dismiss="modal" type="button">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        function editProductAttributeValue(productAttributeValueId, productAttributeId, value) {
+            $('#editProductAttributeValueId').val(productAttributeValueId);
+            $('#editProductAttributeId').val(productAttributeId);
+            $('#editValue').val(value);
+        }
+    </script>
+}

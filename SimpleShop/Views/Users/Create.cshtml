@@ -1,0 +1,49 @@
+﻿@model SimpleShop.Models.User
+
+@{
+    ViewData["Title"] = "ایجاد کاربر";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" asp-action="Index">بازگشت</a>
+</p>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Username" class="control-label"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input type="password" asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Family" class="control-label"></label>
+        <input asp-for="Family" class="form-control" />
+        <span asp-validation-for="Family" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Mobile" class="control-label"></label>
+        <input asp-for="Mobile" class="form-control" />
+        <span asp-validation-for="Mobile" class="text-danger"></span>
+    </div>
+    <div class="form-group p-r-20-px">
+        <div class="checkbox">
+            <label>
+                <input asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="ذخیره" class="btn btn-success" />
+    </div>
+</form>

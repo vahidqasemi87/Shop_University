@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SimpleShop.Models.Product>
+
+@{
+    ViewData["Title"] = "لیست کالا";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" asp-action="Create">جدید</a>
+</p>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .Css("photo-cell")
+    .RenderValueAs(m=>"<img class='img-product' src='/files/productphotos/"+m.PhotoFilename+"'/>");
+    columns.Add(m => m.Subcategory.Name).Titled("زیرگروه").Filterable(true).Sortable(true);
+    columns.Add(m => m.Name).Titled("نام").Filterable(true).Sortable(true);
+    columns.Add(m => m.UnitPrice).Titled("قیمت واحد").Filterable(true).Sortable(true);
+    columns.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(m => "<a class='btn btn-xs btn-primary' href='/productattributevalues/" + m.ProductId + "'>ویژگی ها</a> <a class='btn btn-xs btn-primary' href='/productphotoes/" + m.ProductId + "'>تصاویر</a> <a class='btn btn-xs btn-warning' href='/products/edit/" + m.ProductId + "'>ویرایش</a> <button class='btn btn-xs btn-danger' data-toggle='modal' data-target='#deleteDialog' onclick='setId(" + m.ProductId+ ")'>حذف</button>");
+}).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")
+
+
+@section Styles{ 
+    <style>
+        .img-product{
+            height:40px;
+        }
+        .photo-cell{
+            padding:0px !important;
+        }
+    </style>
+}

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<SimpleShop.Models.Unit>
+
+@{
+    ViewData["Title"] = "لیست واحد اندازه گیری";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<p>
+    <a class="btn btn-xs btn-success" asp-action="Create">جدید</a>
+</p>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(m => m.Name).Titled("نام").Filterable(true).Sortable(true);
+    columns.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(m=>"<a class='btn btn-xs btn-warning' href='/units/edit/"+m.UnitId+ "'>ویرایش</a> <button class='btn btn-xs btn-danger' data-toggle='modal' data-target='#deleteDialog' onclick='setId("+m.UnitId+")'>حذف</button>");
+}).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")

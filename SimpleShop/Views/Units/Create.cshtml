@@ -1,0 +1,23 @@
+﻿@model SimpleShop.Models.Unit
+
+@{
+    ViewData["Title"] = "ایجاد واحد اندازه گیری";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" asp-action="Index">بازگشت</a>
+</p>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="ذخیره" class="btn btn-success" />
+    </div>
+</form>
+

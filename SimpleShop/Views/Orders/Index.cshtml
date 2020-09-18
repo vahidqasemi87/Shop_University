@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SimpleShop.Models.Order>
+
+@{
+    ViewData["Title"] = "لیست سفارش";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(m => m.Customer.Family).Titled("نام خانوادگی").Filterable(true).Sortable(true);
+    columns.Add(m => m.Customer.Name).Titled("نام").Filterable(true).Sortable(true);
+    columns.Add(m => m.Customer.Mobile).Titled("موبایل").Filterable(true).Sortable(true);
+    columns.Add(m => m.PersianOrderDate).Titled("تاریخ سفارش").Filterable(true).Sortable(true);
+    columns.Add(m => m.IsPayedString).Titled("پرداخت شده").Filterable(true).Sortable(true);
+    columns.Add(m => m.PaymentCode).Titled("کد پیگیری").Filterable(true).Sortable(true);
+    columns.Add(m => m.IsSentString).Titled("ارسال شده").Filterable(true).Sortable(true);
+    columns.Add()
+.Sanitized(false)
+.Encoded(false)
+.RenderValueAs(m => "<button class='btn btn-xs btn-primary' data-toggle='modal' data-target='#payedDialog' onclick='setPaymentCode(" + m.OrderId + ",\"" + m.PaymentCode + "\")'>" + m.PayedStatus + "</button> <a class='btn btn-xs btn-primary' href='/orders/editsent/" + m.OrderId + "'>" + m.SentStatus + "</a> <a class='btn btn-xs btn-primary' href='/orderdetails/" + m.OrderId + "'>مشاهده سفارش</a> <button class='btn btn-xs btn-danger' data-toggle='modal' data-target='#deleteDialog' onclick='setId(" + m.OrderId + ")'>حذف</button>");
+}).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")
+
+<div class="modal fade" role="dialog" id="payedDialog">
+    <form method="post" action="/orders/editpayed">
+        <input type="hidden" id="orderId" name="orderId" />
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title">تغییر کد پیگیری</strong>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">کد پیگیری</label>
+                        <input type="text" name="paymentCode" class="form-control" id="paymentCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="id" id="id" />
+                    <button class="btn btn-xs btn-danger pull-left">تائید</button>
+                    <button class="btn btn-xs btn-success" data-dismiss="modal" type="button">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        function setPaymentCode(orderId,paymentCode) {
+            $('#orderId').val(orderId);
+            $('#paymentCode').val(paymentCode);
+        }
+    </script>
+}

@@ -1,0 +1,42 @@
+﻿@model SimpleShop.Models.Product
+
+@{
+    ViewData["Title"] = "ویرایش کالا";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" asp-action="Index">بازگشت</a>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" name="photoFilename" value="@Model.PhotoFilename" />
+            <div class="form-group">
+                <label asp-for="SubcategoryId" class="control-label"></label>
+                <select asp-for="SubcategoryId" class="form-control" asp-items="ViewBag.SubcategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">640*640</label>
+                <label asp-for="PhotoFilename" class="control-label"></label>
+                <input type="file" name="photoFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

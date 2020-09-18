@@ -1,0 +1,21 @@
+﻿.page-footer .page-footer-inner{
+    float:none !important;
+}
+.page-toolbar, .page-footer-inner, .title, th, .btn, .grid-empty-text, .grid-filter-body, .grid-filter-clear, .control-label, input, td, strong, p, .pagination, select, .checkbox,.persian-font {
+    font-family: IRANSans_FaNum !important;
+}
+.grid-empty-text,.grid-filter-body{
+    direction:rtl !important;
+}
+.grid-wrap{
+    width:100% !important;
+}
+button.grid-search-clear,button.grid-search-apply {
+    background-image: url(), linear-gradient(#204d74, #204d74) !important;
+    color:#fff !important;
+    padding-left:10px !important;
+    padding-right:10px !important;
+}
+.p-r-20-px{
+    padding-right:20px !important;  
+}

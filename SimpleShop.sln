@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleShop", "SimpleShop\SimpleShop.csproj", "{B856281E-A1D6-4E2C-B422-2281336DA4A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B856281E-A1D6-4E2C-B422-2281336DA4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B856281E-A1D6-4E2C-B422-2281336DA4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B856281E-A1D6-4E2C-B422-2281336DA4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B856281E-A1D6-4E2C-B422-2281336DA4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAB429D6-6C8B-410D-A784-08A217D46C38}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://source.developing.ir/lionsoft
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SimpleShop\\SimpleShop.csproj
+		SccProjectName1 = SimpleShop
+		SccLocalPath1 = SimpleShop
+	EndGlobalSection
+EndGlobal

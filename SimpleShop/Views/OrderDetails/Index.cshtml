@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SimpleShop.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "مشاهده سفارش";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<p>
+    <a class="btn btn-xs btn-success" href="/orders">بازگشت</a>
+</p>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(m => m.Product.Name).Titled("کالا").Filterable(true).Sortable(true);
+    columns.Add(m => m.Quantity).Titled("تعداد").Filterable(true).Sortable(true);
+    columns.Add(m => m.UnitPrice).Titled("قیمت واحد").Filterable(true).Sortable(true);
+    columns.Add(m => m.TotalPrice).Titled("کل").Filterable(true).Sortable(true);
+    columns.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(m => "<a class='btn btn-xs btn-danger' href='/orderdetails/delete/"+m.OrderDetailId+"'>حذف</button>");
+}).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")

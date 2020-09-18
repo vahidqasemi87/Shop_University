@@ -1,0 +1,71 @@
+﻿#label1 span,.persian-font {
+    font-family: IRANSans_FaNum !important;
+}
+.header-search{
+    padding-right:95px !important;
+    padding-left:initial !important;
+}
+.search-panel{
+    border-left:none !important;
+}
+
+.header-search .search-panel{
+    cursor:none !important;
+}
+
+.t-r{
+    text-align:right !important;
+}
+.m-t-78-px{
+    margin-top:78px !important;
+}
+.f-copyright span{
+    font-size:18px !important;
+}
+.rtl-ul{
+    direction:rtl !important;
+    text-align:right !important;
+}
+.rtl-ul li{
+    background-position-x:right !important;
+    padding-right:25px !important;
+}
+.f-logo{
+    text-align:right !important;
+}
+.footer-social{
+    text-align:right !important;
+}
+.rtl{
+    direction:rtl !important;
+}
+.w-100-p{
+    width:100% !important;
+}
+.ribbon-price.v3{
+    left:initial !important;
+    right:40px !important;
+    top:20px !important;
+}
+.slide ul{
+    background-color:#d3d3d3 !important;
+}
+.cursor-hand{
+    cursor:pointer;
+}
+.m-20-px{
+    margin:20px !important;
+}
+.ltr{
+    direction:ltr !important;
+}
+.product-photo-slide{
+    float:right !important;
+    margin-right:20% !important;
+}
+.slick-prev:before, .slick-next:before{
+    color:#d3d3d3 !important;
+}
+.img-product{
+    height:100px !important;
+}

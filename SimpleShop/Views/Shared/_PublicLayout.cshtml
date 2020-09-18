@@ -1,0 +1,146 @@
+﻿@{ string message = "";
+	if (ViewData["Message"] != null)
+	{
+		message = ViewData["Message"].ToString();
+	}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>فروشگاه | @ViewData["Title"]</title>
+	<link rel="stylesheet" href="/public/css/owl.carousel.min.css">
+	<link rel="shortcut icon" href="/public/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="/public/css/slick.css">
+	<link rel="stylesheet" href="/public/css/slick-theme.css">
+	<link rel="stylesheet" href="/public/css/owl.theme.default.min.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+	<link href="/public/css/font.css" rel="stylesheet" />
+	<link href="/public/css/custom.css" rel="stylesheet" />
+	@RenderSection("Styles", false)
+</head>
+
+<body>
+	<div class="wrappage">
+		@if (message != "")
+		{
+<div id="alert-div" class="alert alert-danger rtl">
+	<strong class="persian-font rtl">@message</strong>
+</div>}
+		@RenderBody()
+		<footer>
+			<div class="f-top">
+				<div class="container container-240">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 rtl">
+							<div class="footer-block footer-about">
+								<div class="f-logo">
+									<a href="/home/customerindex"><img src="/public/img/logo.png" alt="" class="img-reponsive"></a>
+								</div>
+								<ul class="footer-block-content rtl-ul">
+									<li class="address">
+										<span class="persian-font">تهران ....</span>
+									</li>
+									<li class="email">
+										<span>info.shop.com</span>
+									</li>
+								</ul>
+								<div class="footer-social social">
+									<a href="#" class="fa fa-twitter"></a>
+									<a href="#" class="fa fa-dribbble"></a>
+									<a href="#" class="fa fa-behance"></a>
+									<a href="#" class="fa fa-instagram"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 rtl">
+							<div class="footer-block">
+								<h3 class="footer-block-title persian-font">لینک های کاربردی</h3>
+								<ul class="footer-block-content persian-font">
+									<li><a href="https://www.digikala.com/">دیجی کالا</a></li>
+									<li><a href="https://www.ldoceonline.com/">دیکشنری آنلاین</a></li>
+									<li><a href="https://eshop.eca.ir/">فروشگاه تخصصی الکترونیک</a></li>
+									<li><a href="http://icanteach.ir/">آموزش آنلاین</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 rtl">
+							<div class="footer-block w-100-p">
+								<div class="footer-block-phone">
+									<h3 class="footer-block-title persian-font text-right">تماس با ما</h3>
+									<p class="phone-light persian-font">(+9821) 0000000</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="f-bottom">
+				<div class="container container-240">
+					<div class="row flex lr">
+						<div class="col-xs-6 f-copyright"><span class="persian-font">کلیه حقوق برای فروشگاه محفوظ است &copy; 1399</span></div>
+						<div class="col-xs-6 f-payment hidden-xs">
+
+							<a href="#"><img src="~/files/picture/01_image.png" alt="" class="img-reponsive" /></a>
+							<a href="#"><img src="~/files/picture/02_image.png" alt="" class="img-reponsive" /></a>
+							<a href="#"><img src="~/files/picture/03_image.png" alt="" class="img-reponsive" /></a>
+							<a href="#"><img src="~/files/picture/04_image.png"alt="" class="img-reponsive" /></a>
+							<a href="#"><img src="~/files/picture/05_image.png"alt="" class="img-reponsive" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<a href="#" class="btn-gradient scroll_top"><i class="ion-ios-arrow-up"></i></a>
+	<div class="modal fade rtl" role="dialog" id="loginDialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form method="post" action="/home/customerlogin">
+					<div class="modal-header">
+						<strong class="persian-font">ورود</strong>
+					</div>
+					<div class="modal-body">
+						<div class="row m-20-px">
+							<div class="col-md-12">
+								<input autocomplete="off" type="text" name="username" class="form-control persian-font" placeholder="شناسه" />
+							</div>
+						</div>
+						<br />
+						<div class="row m-20-px">
+							<div class="col-md-12">
+								<input autocomplete="off" type="password" name="password" class="form-control persian-font" placeholder="رمز" />
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-success pull-right persian-font">ورود</button>
+						<a href="/home/signup" class="btn btn-sm btn-primary pull-left persian-font">ثبت نام</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="/public/js/jquery-1.11.0.min.js"></script>
+	<script src="/public/js/bootstrap.js"></script>
+	<script src="/public/js/owl.carousel.min.js"></script>
+	<script src="/public/js/slick.js"></script>
+	<script src="/public/js/countdown.js"></script>
+	<script src="/public/js/all.js"></script>
+	<script src="/public/js/notify.js"></script>
+	@RenderSection("Scripts", false)
+	@if (message != "")
+	{
+<script>
+
+	setTimeout('clearAlertDiv()', 2000);
+	function clearAlertDiv() {
+		$('#alert-div').css('display', 'none');
+	}
+
+</script>}
+</body>
+</html>

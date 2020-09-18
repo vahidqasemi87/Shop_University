@@ -1,0 +1,18 @@
+﻿@model IEnumerable<SimpleShop.Models.Customer>
+
+@{
+    ViewData["Title"] = "لیست مشتری";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(m => m.Username).Titled("شناسه").Filterable(true).Sortable(true);
+    columns.Add(m => m.Family).Titled("نام خانوادگی").Filterable(true).Sortable(true);
+    columns.Add(m => m.Name).Titled("نام").Filterable(true).Sortable(true);
+    columns.Add(m => m.Mobile).Titled("موبایل").Filterable(true).Sortable(true);
+    columns.Add(m => m.City.State.Name).Titled("استان").Filterable(true).Sortable(true);
+    columns.Add(m => m.City.Name).Titled("شهر").Filterable(true).Sortable(true);
+    columns.Add(m => m.Address).Titled("آدرس").Filterable(true).Sortable(true);
+}).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")

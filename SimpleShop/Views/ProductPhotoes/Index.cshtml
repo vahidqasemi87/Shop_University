@@ -1,0 +1,55 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "تصاویر کالا";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a class="btn btn-xs btn-success" href="/products">بازگشت</a>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="Index" enctype="multipart/form-data">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <div class="form-group">
+                <label class="control-label">تصاویر تکمیلی 721*466</label>
+                <input type="file" name="photoFiles" class="form-control" multiple />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @Html.Grid(Model.ProductPhoto).Columns(columns =>
+        {
+            columns.Add()
+            .Sanitized(false)
+            .Encoded(false)
+            .Css("photo-cell")
+            .RenderValueAs(m => "<img class='img-product' src='/files/productphotos/" + m.PhotoFilename + "'/>");
+            columns.Add()
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(m => "<button class='btn btn-xs btn-danger' data-toggle='modal' data-target='#deleteDialog' onclick='setId(" + m.ProductPhotoId + ")'>حذف</button>");
+        }).SetDirection(GridShared.GridDirection.RTL).SetStriped(true).Searchable(true).WithPaging(5).EmptyText("در حال حاضر اطلاعاتی موجود نیست !")
+    </div>
+</div>
+
+@section Styles{
+    <style>
+        .img-product {
+            height: 40px;
+        }
+
+        .photo-cell {
+            padding: 0px !important;
+        }
+    </style>
+}
+

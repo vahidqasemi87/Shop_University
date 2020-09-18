@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<header id="header" class="header-v1">
+    <div class="topbar">
+        <div class="container container-240">
+            <div class="row flex">
+                <div class="col-md-6 col-sm-6 col-xs-8 flex-left">
+                    <div class="topbar-left">
+                        <div class="element hidden-xs hidden-sm">
+                            <a class="persian-font" href="/home/userlogin">ورود مدیریت</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-4 flex-right">
+                    <div class="topbar-right">
+                        <div class="element element-store hidden-xs hidden-sm">
+                            <a id="label1" class="dropdown-toggle" href="https://goo.gl/maps/CFShBzq9nq9fzXWp7" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="/public/img/icon-map.png" alt="">
+                                <span>آدرس فروشگاه</span>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-center">
+        <div class="container container-240">
+            <div class="row flex">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6 v-center header-sub">
+                    <div class="left-panel">
+                        <div class="header-sub-element hidden-xs hidden-sm">
+                            <div class="sub-left">
+                                <img src="/public/img/icon-call.png" alt="">
+                            </div>
+                            <div class="sub-right text-right">
+                                <span class="persian-font">تماس با ما</span>
+                                <div class="phone persian-font">(+9821) 456 789 </div>
+                            </div>
+                        </div>
+                        <div class="header-sub-element row">
+                            <a class="hidden-xs hidden-sm cursor-hand" data-toggle="modal" data-target="#loginDialog"><img src="/public/img/icon-user.png" alt=""></a>
+                            <div class="cart">
+                                <a href="/home/order" class="dropdown-toggle" id="label5">
+                                    <img src="/public/img/icon-cart.png" alt="">
+                                    <span class="count cart-count">0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 v-center header-search hidden-xs hidden-sm">
+                    <form method="get" class="searchform ajax-search" action="/home/search" role="search">
+                        <input type="hidden" name="type" value="product">
+                        <input autocomplete="off" type="text" onblur="if (this.value=='') this.value = this.defaultValue" onfocus="if (this.value==this.defaultValue) this.value = ''" name="search" class="form-control persian-font" placeholder="جستجو">
+                        <ul class="list-product-search hidden-xs hidden-sm">
+                        </ul>
+                        <div class="search-panel">
+
+                        </div>
+                        <span class="input-group-btn">
+                            <button class="button_search" type="button"><i class="ion-ios-search-strong"></i></button>
+                        </span>
+                    </form>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 v-center header-logo">
+                    <a href="/home/customerindex"><img src="/public/img/logo.png" alt="" class="img-reponsive"></a>
+                </div>
+            </div>
+        </div>
+    </div>    
+</header>
+<div class="container rtl">
+    <br />
+    <form method="post" action="/home/signup" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">شناسه</label>
+            <div class="col-md-10">
+                <input type="text" name="username" class="form-control persian-font" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">رمز</label>
+            <div class="col-md-10">
+                <input type="password" name="password" class="form-control persian-font" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">موبایل</label>
+            <div class="col-md-10">
+                <input type="text" name="mobile" class="form-control persian-font" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">نام</label>
+            <div class="col-md-10">
+                <input type="text" name="name" class="form-control persian-font" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">نام خانوادگی</label>
+            <div class="col-md-10">
+                <input type="text" name="family" class="form-control persian-font" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 persian-font">شهر</label>
+            <div class="col-md-10">
+                <select class="form-control persian-font" name="cityId">
+                    @foreach (var state in ViewData["State"] as List<State>)
+                    {
+                        <optgroup label="@state.Name">
+                            @foreach (var city in state.City)
+                            {
+                                <option value="@city.CityId">@city.Name</option>
+                            }
+                        </optgroup>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <textarea class="form-control persian-font" placeholder="آدرس" name="address"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <button class="persian-font btn btn-sm btn-success">ثبت نام</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Styles
+{
+    <style>
+        .control-label{
+            float:right !important;
+        }
+    </style>
+}
