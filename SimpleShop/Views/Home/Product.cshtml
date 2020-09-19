@@ -102,12 +102,12 @@
 		<h3 class="persian-font rtl text-center">@Model.Name</h3>
 		<hr />
 		<div class="col-md-8">
-			<table class="table persian-font table-striped">
+			<table class="table persian-font table-striped table-hover table-bordered">
 				@foreach (var productAttributeValue in Model.ProductAttributeValue.OrderBy(v => v.ProductAttribute.Name))
 				{
-					<tr>
-						<th>@productAttributeValue.ProductAttribute.Name</th>
-						<td>@productAttributeValue.Value</td>
+					<tr class="text-center">
+						<td style="width:150px;">@productAttributeValue.Product.Name</td>
+						<td style="width:75px;">@productAttributeValue.Value</td>
 					</tr>
 				}
 			</table>
