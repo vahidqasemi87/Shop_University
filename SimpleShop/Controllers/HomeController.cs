@@ -94,9 +94,6 @@ namespace SimpleShop.Controllers
 				return View("CustomerIndex");
 			}
 		}
-
-
-
 		[User]
 		public IActionResult UserLogout()
 		{
@@ -140,7 +137,13 @@ namespace SimpleShop.Controllers
 		[Customer]
 		public IActionResult Product(int? id)
 		{
-			var product = _db.Product.Find(id);
+			//var product = _db.Product.Find(id);
+
+			var product = _db.Product
+				.Include(c => c.ProductPhoto)
+				.Include(c => c.ProductAttributeValue)
+				.ThenInclude(c=>c.ProductAttribute)
+				.Where(w => w.ProductId == id).FirstOrDefault();
 			return View(product);
 		}
 		public IActionResult Products()
@@ -215,7 +218,7 @@ namespace SimpleShop.Controllers
 		public IActionResult Captcha()
 		{
 			//string code = new Random().Next(1000, 9999).ToString();
-			string code = GenerateCoupon(4,new Random());
+			string code = GenerateCoupon(4, new Random());
 			HttpContext.Session.SetString("Code", code);
 			Bitmap bitmap = new Bitmap(300, 150);
 			var graphics = Graphics.FromImage(bitmap);
