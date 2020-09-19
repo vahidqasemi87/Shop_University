@@ -1,7 +1,7 @@
 ﻿.page-footer .page-footer-inner{
     float:none !important;
 }
-.page-toolbar, .page-footer-inner, .title, th, .btn, .grid-empty-text, .grid-filter-body, .grid-filter-clear, .control-label, input, td, strong, p, .pagination, select, .checkbox,.persian-font {
+.page-toolbar, .page-footer-inner, .title, th, .btn, .grid-empty-text, .grid-filter-body, .grid-filter-clear, .control-label, input, td, strong, p, .pagination, select, .checkbox,.persian-font,span {
     font-family: IRANSans_FaNum !important;
 }
 .grid-empty-text,.grid-filter-body{
