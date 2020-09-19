@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -94,20 +95,7 @@ namespace SimpleShop.Controllers
 			}
 		}
 
-		public IActionResult Captcha()
-		{
-			string code = new Random().Next(1000, 9999).ToString();
-			HttpContext.Session.SetString("Code", code);
-			System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(300, 150);
-			var graphics = Graphics.FromImage(bitmap);
-			graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, 300, 150));
-			graphics.FillRectangle(new HatchBrush(HatchStyle.Cross, Color.Gray), new Rectangle(0, 0, 300, 150));
-			graphics.DrawString(code, new Font("arial", 72), Brushes.Gray, new PointF(25, 20));
-			MemoryStream stream = new MemoryStream();
-			graphics.Save();
-			bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-			return new FileContentResult(stream.GetBuffer(), "image/jpg");
-		}
+
 
 		[User]
 		public IActionResult UserLogout()
@@ -208,7 +196,7 @@ namespace SimpleShop.Controllers
 				return View(order);
 			}
 			return View();
-			
+
 		}
 		[Customer]
 		public IActionResult OrderDetails(int id)
@@ -223,6 +211,31 @@ namespace SimpleShop.Controllers
 			order.IsPayed = true;
 			_db.SaveChanges();
 			HttpContext.Response.Redirect("https://sadad.shaparak.ir/billpayment");
+		}
+		public IActionResult Captcha()
+		{
+			//string code = new Random().Next(1000, 9999).ToString();
+			string code = GenerateCoupon(4,new Random());
+			HttpContext.Session.SetString("Code", code);
+			Bitmap bitmap = new Bitmap(300, 150);
+			var graphics = Graphics.FromImage(bitmap);
+			graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, 300, 150));
+			graphics.FillRectangle(new HatchBrush(HatchStyle.Cross, Color.Gray), new Rectangle(0, 0, 300, 150));
+			graphics.DrawString(code, new Font("Comic Sans MS", 50), Brushes.Gray, new PointF(30, 30));
+			MemoryStream stream = new MemoryStream();
+			graphics.Save();
+			bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+			return new FileContentResult(stream.GetBuffer(), "image/jpg");
+		}
+		public static string GenerateCoupon(int length, Random random)
+		{
+			string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			StringBuilder result = new StringBuilder(length);
+			for (int i = 0; i < length; i++)
+			{
+				result.Append(characters[random.Next(characters.Length)]);
+			}
+			return result.ToString();
 		}
 	}
 }
