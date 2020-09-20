@@ -23,7 +23,7 @@ namespace SimpleShop.ActionFilters
 					new RouteValueDictionary
 					{
 						{ "controller","Home"},
-						{ "Action","signup"}
+						{ "Action","UserLogin"}
 					}
 					);
 				base.OnActionExecuting(context);

@@ -142,7 +142,7 @@ namespace SimpleShop.Controllers
 			var product = _db.Product
 				.Include(c => c.ProductPhoto)
 				.Include(c => c.ProductAttributeValue)
-				.ThenInclude(c=>c.ProductAttribute)
+				.ThenInclude(c => c.ProductAttribute)
 				.Where(w => w.ProductId == id).FirstOrDefault();
 			return View(product);
 		}
@@ -159,46 +159,46 @@ namespace SimpleShop.Controllers
 		public IActionResult AddToOrder(int id)
 		{
 			var product = _db.Product.Find(id);
-			if (HttpContext.Session.Keys.Contains("Customer"))
+			//if (HttpContext.Session.Keys.Contains("Customer"))
+			//{
+			var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
+			var order = curomer.Order.Where(o => o.IsPayed == false).FirstOrDefault();
+			if (order == null)
 			{
-				var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
-				var order = curomer.Order.Where(o => o.IsPayed == false).FirstOrDefault();
-				if (order == null)
-				{
-					order = new Order();
-					order.IsPayed = false;
-					order.IsSent = false;
-					order.OrderDate = DateTime.Now;
-					order.PaymentCode = "";
-					order.CustomerId = curomer.CustomerId;
-					_db.Order.Add(order);
-					_db.SaveChanges();
-				}
-				var orderDetail = new OrderDetail();
-				orderDetail.ProductId = id;
-				orderDetail.Quantity = 1;
-				orderDetail.UnitPrice = product.UnitPrice;
-				order.OrderDetail.Add(orderDetail);
+				order = new Order();
+				order.IsPayed = false;
+				order.IsSent = false;
+				order.OrderDate = DateTime.Now;
+				order.PaymentCode = "";
+				order.CustomerId = curomer.CustomerId;
+				_db.Order.Add(order);
 				_db.SaveChanges();
-				//return View("Order", order);
-				return RedirectToAction("Order", order);
 			}
-			else
-			{
-				return RedirectToAction("product", new { id = id });
-			}
+			var orderDetail = new OrderDetail();
+			orderDetail.ProductId = id;
+			orderDetail.Quantity = 1;
+			orderDetail.UnitPrice = product.UnitPrice;
+			order.OrderDetail.Add(orderDetail);
+			_db.SaveChanges();
+			//return View("Order", order);
+			return RedirectToAction("Order", order);
+			//}
+			//else
+			//{
+			//	return RedirectToAction("product", new { id = id });
+			//}
 		}
 		[Customer]
 		public IActionResult Order()
 		{
-			if (HttpContext.Session.Keys.Contains("Customer"))
-			{
+			//if (HttpContext.Session.Keys.Contains("Customer"))
+			//{
 				var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
 				_db.Entry(curomer).Collection(c => c.Order).Load();
 				var order = curomer.Order.Where(o => o.IsPayed == false).ToList();
 				return View(order);
-			}
-			return View();
+			//}
+			//return View();
 
 		}
 		[Customer]

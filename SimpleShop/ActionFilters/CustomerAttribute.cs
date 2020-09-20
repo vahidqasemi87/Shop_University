@@ -16,13 +16,13 @@ namespace SimpleShop.ActionFilters
 			//{
 			//	context.HttpContext.Response.Redirect("/home/signup");
 			//}
-			var flag = context.HttpContext.Session.Keys.Contains("customer");
+			var flag = context.HttpContext.Session.Keys.Contains("Customer");
 			if (!flag)
 			{
 				context.Result = new RedirectToRouteResult(
 					new RouteValueDictionary
 					{
-						{ "controller","Home"},
+						{ "Controller","Home"},
 						{ "Action","signup"}
 					}
 					);
