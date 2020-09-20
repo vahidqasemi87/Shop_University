@@ -159,8 +159,6 @@ namespace SimpleShop.Controllers
 		public IActionResult AddToOrder(int id)
 		{
 			var product = _db.Product.Find(id);
-			//if (HttpContext.Session.Keys.Contains("Customer"))
-			//{
 			var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
 			var order = curomer.Order.Where(o => o.IsPayed == false).FirstOrDefault();
 			if (order == null)
@@ -180,26 +178,15 @@ namespace SimpleShop.Controllers
 			orderDetail.UnitPrice = product.UnitPrice;
 			order.OrderDetail.Add(orderDetail);
 			_db.SaveChanges();
-			//return View("Order", order);
-			return RedirectToAction("Order", order);
-			//}
-			//else
-			//{
-			//	return RedirectToAction("product", new { id = id });
-			//}
+			return View("Order", order);
 		}
 		[Customer]
 		public IActionResult Order()
 		{
-			//if (HttpContext.Session.Keys.Contains("Customer"))
-			//{
 				var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
 				_db.Entry(curomer).Collection(c => c.Order).Load();
 				var order = curomer.Order.Where(o => o.IsPayed == false).ToList();
 				return View(order);
-			//}
-			//return View();
-
 		}
 		[Customer]
 		public IActionResult OrderDetails(int id)

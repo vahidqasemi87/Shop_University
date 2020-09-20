@@ -12,10 +12,6 @@ namespace SimpleShop.ActionFilters
 	{
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
-			//if (!context.HttpContext.Session.Keys.Contains("User"))
-			//{
-			//    context.HttpContext.Response.Redirect("/home/userlogin");
-			//}
 			var flag = context.HttpContext.Session.Keys.Contains("User");
 			if (!flag)
 			{
