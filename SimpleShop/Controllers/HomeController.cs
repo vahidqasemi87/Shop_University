@@ -47,7 +47,7 @@ namespace SimpleShop.Controllers
 		[HttpPost]
 		public IActionResult UserLogin(string username, string password, string code)
 		{
-			if (HttpContext.Session.GetString("Code") == code)
+			if (HttpContext.Session.GetString("Code") == code.ToLower())
 			{
 				string hash = _hashHelper.GetMD5(password);
 				var user = _db.User.Where(u => u.Username == username && u.Password == hash).FirstOrDefault();
@@ -205,13 +205,13 @@ namespace SimpleShop.Controllers
 		public IActionResult Captcha()
 		{
 			//string code = new Random().Next(1000, 9999).ToString();
-			string code = GenerateCoupon(4, new Random());
+			string code = GenerateCoupon(6, new Random());
 			HttpContext.Session.SetString("Code", code);
 			Bitmap bitmap = new Bitmap(300, 150);
 			var graphics = Graphics.FromImage(bitmap);
 			graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, 300, 150));
 			graphics.FillRectangle(new HatchBrush(HatchStyle.Cross, Color.Gray), new Rectangle(0, 0, 300, 150));
-			graphics.DrawString(code, new Font("Comic Sans MS", 50), Brushes.Gray, new PointF(30, 30));
+			graphics.DrawString(code, new Font("Consolas", 50), Brushes.Gray, new PointF(20, 20));
 			MemoryStream stream = new MemoryStream();
 			graphics.Save();
 			bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -225,7 +225,7 @@ namespace SimpleShop.Controllers
 			{
 				result.Append(characters[random.Next(characters.Length)]);
 			}
-			return result.ToString();
+			return result.ToString().ToLower();
 		}
 	}
 }
