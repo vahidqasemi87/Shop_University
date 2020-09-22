@@ -178,7 +178,7 @@ namespace SimpleShop.Controllers
 			orderDetail.UnitPrice = product.UnitPrice;
 			order.OrderDetail.Add(orderDetail);
 			_db.SaveChanges();
-			return View("Order", order);
+			return RedirectToAction("Order", order);
 		}
 		[Customer]
 		public IActionResult Order()
