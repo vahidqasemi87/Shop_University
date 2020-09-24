@@ -24,6 +24,7 @@ namespace SimpleShop.Models
         [Required(ErrorMessage ="شناسه الزامی است !")]
         [MaxLength(50,ErrorMessage ="حداکثر 50 کاراکتر !")]
         [Display(Name="شناسه")]
+        [Remote("IsUserExists", "Users", ErrorMessage ="این نام کاربری قبلا ثبت گردیده است")]
         public string Username { get; set; }
         [Required(ErrorMessage ="رمز الزامی است !")]
         [MaxLength(50,ErrorMessage ="حداکثر 50 کاراکتر !")]

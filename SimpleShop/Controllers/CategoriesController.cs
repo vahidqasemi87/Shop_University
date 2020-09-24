@@ -33,6 +33,7 @@ namespace SimpleShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoryId,Name")] Category category)
         {
+            category.Name = category.Name.Trim();
             if (ModelState.IsValid)
             {
                 _context.Add(category);
@@ -101,6 +102,10 @@ namespace SimpleShop.Controllers
         private bool CategoryExists(int id)
         {
             return _context.Category.Any(e => e.CategoryId == id);
+        }
+        public JsonResult IsCategoryNameExists(string name)
+        {
+            return Json(!_context.Category.Any(c=>c.Name==name.Trim()));
         }
     }
 }

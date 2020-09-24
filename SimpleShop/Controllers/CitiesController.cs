@@ -35,6 +35,7 @@ namespace SimpleShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CityId,StateId,Name")] City city)
         {
+            city.Name = city.Name.Trim();
             if (ModelState.IsValid)
             {
                 _context.Add(city);
@@ -106,6 +107,10 @@ namespace SimpleShop.Controllers
         private bool CityExists(int id)
         {
             return _context.City.Any(e => e.CityId == id);
+        }
+        public JsonResult IsCityExists(string name)
+        {
+            return Json(!_context.City.Any(c=>c.Name==name.Trim()));
         }
     }
 }

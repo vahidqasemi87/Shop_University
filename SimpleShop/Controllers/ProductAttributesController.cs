@@ -35,6 +35,7 @@ namespace SimpleShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductAttributeId,Name,UnitId")] ProductAttribute productAttribute)
         {
+            productAttribute.Name = productAttribute.Name.Trim();
             if (ModelState.IsValid)
             {
                 _context.Add(productAttribute);
@@ -107,5 +108,9 @@ namespace SimpleShop.Controllers
         {
             return _context.ProductAttribute.Any(e => e.ProductAttributeId == id);
         }
+        //public JsonResult IsAttributeValueName(string name)
+        //{
+        //    return Json(!_context.ProductAttribute.Any(c => c.Name == name.Trim()));
+        //}
     }
 }

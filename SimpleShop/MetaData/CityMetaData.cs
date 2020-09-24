@@ -18,6 +18,7 @@ namespace SimpleShop.Models
         [Required(ErrorMessage ="نام الزامی است !")]
         [MaxLength(50,ErrorMessage ="حداکثر 50 کاراکتر !")]
         [Display(Name="نام")]
+        [Remote("IsCityExists", "Cities", ErrorMessage ="نام شهر ورودی قبلا ثبت گردیده است ")]
         public string Name { get; set; }
         [Display(Name="استان")]
         public int StateId { get; set; }

@@ -18,6 +18,7 @@ namespace SimpleShop.Models
         [Required(ErrorMessage ="نام الزامی است !")]
         [MaxLength(50,ErrorMessage ="حداکثر 50 کاراکتر !")]
         [Display(Name="نام")]
+        [Remote("IsCategoryNameExists", "Categories", ErrorMessage ="این نام تکراری می باشد")]
         public string Name { get; set; }
     }
 }

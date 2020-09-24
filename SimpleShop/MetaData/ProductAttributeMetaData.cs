@@ -20,6 +20,7 @@ namespace SimpleShop.Models
         [Display(Name="نام")]
         public string Name { get; set; }
         [Display(Name="واحد اندازه گیری")]
+        //[Remote("IsAttributeValueName", " ProductAttributes", ErrorMessage ="این نام قبلا ثبت گردیده است")]
         public int UnitId { get; set; }
     }
 }

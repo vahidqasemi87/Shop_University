@@ -10,19 +10,23 @@ using SimpleShop.Models;
 
 namespace SimpleShop.Controllers
 {
-    public class CustomersController : Controller
-    {
-        private readonly SimpleShopDatabaseContext _context;
+	public class CustomersController : Controller
+	{
+		private readonly SimpleShopDatabaseContext _context;
 
-        public CustomersController(SimpleShopDatabaseContext context)
-        {
-            _context = context;
-        }
-        [User]
-        public async Task<IActionResult> Index()
-        {
-            var simpleShopDatabaseContext = _context.Customer.Include(c => c.City).Include(c=>c.City.State);
-            return View(await simpleShopDatabaseContext.ToListAsync());
-        }
-    }
+		public CustomersController(SimpleShopDatabaseContext context)
+		{
+			_context = context;
+		}
+		[User]
+		public async Task<IActionResult> Index()
+		{
+			var simpleShopDatabaseContext = _context.Customer.Include(c => c.City).Include(c => c.City.State);
+			return View(await simpleShopDatabaseContext.ToListAsync());
+		}
+		public JsonResult IsExistUserCustomer(string username)
+		{
+			return Json(!_context.Customer.Any(c => c.Username == username.Trim()));
+		}
+	}
 }

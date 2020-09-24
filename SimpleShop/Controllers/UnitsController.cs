@@ -36,6 +36,7 @@ namespace SimpleShop.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				unit.Name = unit.Name.Trim();
 				_context.Add(unit);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
