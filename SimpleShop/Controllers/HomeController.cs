@@ -47,7 +47,7 @@ namespace SimpleShop.Controllers
 		[HttpPost]
 		public IActionResult UserLogin(string username, string password, string code)
 		{
-			if (HttpContext.Session.GetString("Code") == code.ToLower())
+			if (HttpContext.Session.GetString("Code").ToLower() == code.ToLower())
 			{
 				string hash = _hashHelper.GetMD5(password);
 				var user = _db.User.Where(u => u.Username == username && u.Password == hash).FirstOrDefault();
@@ -183,10 +183,10 @@ namespace SimpleShop.Controllers
 		[Customer]
 		public IActionResult Order()
 		{
-				var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
-				_db.Entry(curomer).Collection(c => c.Order).Load();
-				var order = curomer.Order.Where(o => o.IsPayed == false).ToList();
-				return View(order);
+			var curomer = _db.Customer.Find(_binaryHelper.FromBinary<Customer>(HttpContext.Session.Get("Customer")).CustomerId);
+			_db.Entry(curomer).Collection(c => c.Order).Load();
+			var order = curomer.Order.Where(o => o.IsPayed == false).ToList();
+			return View(order);
 		}
 		[Customer]
 		public IActionResult OrderDetails(int id)
@@ -225,7 +225,7 @@ namespace SimpleShop.Controllers
 			{
 				result.Append(characters[random.Next(characters.Length)]);
 			}
-			return result.ToString().ToLower();
+			return result.ToString();
 		}
 	}
 }

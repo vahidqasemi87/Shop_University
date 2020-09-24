@@ -18,6 +18,8 @@ namespace SimpleShop.Models
         [Required(ErrorMessage ="نام الزامی است !")]
         [MaxLength(50,ErrorMessage ="حداکثر 50 کاراکتر !")]
         [Display(Name="نام")]
+        [Remote("IsUserExists", "Units", ErrorMessage = "این مقدار قبلا ثبت گردیده است")]
         public string Name { get; set; }
+      
     }
 }
